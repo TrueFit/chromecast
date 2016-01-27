@@ -1,0 +1,16 @@
+{
+  "name": "chromecast-admin",
+  "version": "1.0.0",
+  "description": "admin for the chromecast app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/truefit/chromecast.git"
+  },
+  "author": "jgretz",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/truefit/chromecast#readme"
+}
