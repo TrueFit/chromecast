@@ -54272,11 +54272,17 @@ angular.module("app").config(($routeProvider, $locationProvider) => {
         .html5Mode(true)
         .hashPrefix("!");
 
-    // Home
     $routeProvider.when("/", {
-      controller: "HomeController",
-      templateUrl: "app/templates/controllers/home.html"
+      controller: "AdminController",
+      templateUrl: "app/templates/controllers/display.html"
     });
+
+    // AdminController
+    $routeProvider.when("/admin", {
+      controller: "AdminController",
+      templateUrl: "app/templates/controllers/admin.html"
+    });
+
     // 404
     $routeProvider.when("/error", {
       controller: "ErrorController",
@@ -54413,15 +54419,21 @@ class ApiService extends Service {
   }
 }
 
+
+class AdminController extends Controller {
+}
+
+AdminController.register();
+
+class DisplayController extends Controller {
+}
+
+DisplayController.register();
+
 class ErrorController extends Controller {
 }
 
 ErrorController.register();
-
-class HomeController extends Controller {
-}
-
-HomeController.register();
 
 class Menu extends Directive {
   link(scope) {
@@ -54482,5 +54494,6 @@ RevenueCapacityCompany.register({
 });
 
 angular.module("app").run(["$templateCache", function($templateCache) {$templateCache.put("app/templates/controllers/404.html","404");
-$templateCache.put("app/templates/controllers/home.html","Hello World");
+$templateCache.put("app/templates/controllers/admin.html","<div class=\"container-fluid content\"><div class=row><div class=col-xs-12><menu></menu></div></div><div class=row><div class=\"col-xs-10 col-xs-offset-1\"></div></div></div>");
+$templateCache.put("app/templates/controllers/display.html","<div>Hello Display</div>");
 $templateCache.put("app/templates/directives/menu.html","<nav class=\"navbar navbar-default\"><div class=container-fluid><ul class=\"nav navbar-nav\"><li><a href=\"/\">Home</a></li></ul></div></nav>");}]);

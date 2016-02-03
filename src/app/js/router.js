@@ -3,11 +3,17 @@ angular.module("app").config(($routeProvider, $locationProvider) => {
         .html5Mode(true)
         .hashPrefix("!");
 
-    // Home
     $routeProvider.when("/", {
-      controller: "HomeController",
-      templateUrl: "app/templates/controllers/home.html"
+      controller: "AdminController",
+      templateUrl: "app/templates/controllers/display.html"
     });
+
+    // AdminController
+    $routeProvider.when("/admin", {
+      controller: "AdminController",
+      templateUrl: "app/templates/controllers/admin.html"
+    });
+
     // 404
     $routeProvider.when("/error", {
       controller: "ErrorController",
