@@ -54573,7 +54573,7 @@ class SlideDisplay extends Directive {
   link(scope) {
     var visibleIndex = 0;
     var cycle = () => {
-      this.$timeout(cycle, 5000);
+      this.$timeout(cycle, 10000);
 
       console.log(visibleIndex);
 
