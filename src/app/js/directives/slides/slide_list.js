@@ -8,7 +8,7 @@ class SlideList extends Directive {
   link(scope) {
     var updateSlides = () => {
       this.slideService.getAll().then((slides) => {
-        console.log(slides);
+        scope.slides = slides;
       });
     };
     updateSlides();
@@ -21,7 +21,9 @@ class SlideList extends Directive {
       file: null
     };
     scope.addSlide = () => {
-      this.slideService.post(scope.slide);
+      this.slideService.post(scope.slide).then((slide) => {
+        updateSlides();
+      });
     };
   }
 }

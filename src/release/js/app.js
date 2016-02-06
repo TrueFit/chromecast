@@ -54573,7 +54573,7 @@ class SlideList extends Directive {
   link(scope) {
     var updateSlides = () => {
       this.slideService.getAll().then((slides) => {
-        console.log(slides);
+        scope.slides = slides;
       });
     };
     updateSlides();
@@ -54586,7 +54586,9 @@ class SlideList extends Directive {
       file: null
     };
     scope.addSlide = () => {
-      this.slideService.post(scope.slide);
+      this.slideService.post(scope.slide).then((slide) => {
+        updateSlides();
+      });
     };
   }
 }
@@ -56914,7 +56916,7 @@ angular.module("app").run(["$templateCache", function($templateCache) {$template
 $templateCache.put("app/templates/controllers/admin.html","<div class=\"container-fluid content\"><div class=row><div class=col-xs-12><menu></menu></div></div><div class=row><div class=\"col-xs-10 col-xs-offset-1\"><slide_list></slide_list></div></div></div>");
 $templateCache.put("app/templates/controllers/display.html","<div>Hello Display</div>");
 $templateCache.put("app/templates/directives/menu.html","<nav class=\"navbar navbar-default\"><div class=container-fluid><ul class=\"nav navbar-nav\"><li><a href=/admin>Slides</a></li></ul></div></nav>");
-$templateCache.put("app/templates/directives/slides/slide_list.html","<div><div class=row><div class=\"col-xs-12 buttons\"><button class=\"btn pull-right\" data-toggle=modal data-target=#addSlide>Add Slide</button></div></div><div class=row><div class=col-xs-12><table class=\"table table-bordered table-striped\"><tr><th>Active</th><th>Name</th><th>Text</th><th>Background Color</th><th>Image</th></tr><tr ng-repeat=\"slide in slides\"><td></td><td></td><td></td><td></td></tr></table></div></div><div class=\"modal fade\" id=addSlide role=dialog><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal>&times;</button><h4 class=modal-title>Add New Slide</h4></div><div class=modal-body><fieldset><div><label for=name>Name</label><br><input ng-model=slide.name name=name class=\"form-control\"></div><div><label for=Text>Text</label><br><input ng-model=slide.text name=text class=\"form-control\"></div><div><label for=backgroundColor>Background Color</label><br><color-picker ng-model=slide.backgroundColor color-picker-format=\"\'hex\'\" color-picker-alpha=false color-picker-swatch=false></color-picker></div><div><label for=file>Image</label><br><input file-model=slide.file name=file type=file accept=\"image/*\"></div></fieldset></div><div class=modal-footer><button type=button class=\"btn btn-danger pull-right\" data-dismiss=modal>Cancel</button> <button type=button class=\"btn btn-success pull-left\" data-dismiss=modal ng-click=addSlide()>Save</button></div></div></div></div></div>");}]);
+$templateCache.put("app/templates/directives/slides/slide_list.html","<div><div class=row><div class=\"col-xs-12 buttons\"><button class=\"btn pull-right\" data-toggle=modal data-target=#addSlide>Add Slide</button></div></div><div class=row><div class=col-xs-12><table class=\"table table-bordered table-striped\"><tr><th>Active</th><th>Name</th><th>Text</th><th>Background Color</th><th>Image</th></tr><tr ng-repeat=\"slide in slides\"><td>{{slide.active}}</td><td>{{slide.name}}</td><td>{{slide.text}}</td><td>{{slide.backgroundColor}}</td><td>{{slide.image}}</td></tr></table></div></div><div class=\"modal fade\" id=addSlide role=dialog><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal>&times;</button><h4 class=modal-title>Add New Slide</h4></div><div class=modal-body><fieldset><div><label for=name>Name</label><br><input ng-model=slide.name name=name class=\"form-control\"></div><div><label for=Text>Text</label><br><input ng-model=slide.text name=text class=\"form-control\"></div><div><label for=backgroundColor>Background Color</label><br><color-picker ng-model=slide.backgroundColor color-picker-format=\"\'hex\'\" color-picker-alpha=false color-picker-swatch=false></color-picker></div><div><label for=file>Image</label><br><input file-model=slide.file name=file type=file accept=\"image/*\"></div></fieldset></div><div class=modal-footer><button type=button class=\"btn btn-danger pull-right\" data-dismiss=modal>Cancel</button> <button type=button class=\"btn btn-success pull-left\" data-dismiss=modal ng-click=addSlide()>Save</button></div></div></div></div></div>");}]);
 // TinyColor v1.3.0
 // https://github.com/bgrins/TinyColor
 // 2015-11-27, Brian Grinstead, MIT License
