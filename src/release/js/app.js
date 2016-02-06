@@ -54563,6 +54563,54 @@ Menu.register({
   replace: true
 });
 
+class SlideDisplay extends Directive {
+  defineInjections() {
+    super.defineInjections();
+
+    this.addInjections(['slideService', '$timeout']);
+  }
+
+  link(scope) {
+    var visibleIndex = 0;
+    var cycle = () => {
+      this.$timeout(cycle, 5000);
+
+      console.log(visibleIndex);
+
+      visibleIndex++;
+      if (visibleIndex >= scope.slides.length) {
+        visibleIndex = 0;
+      }
+    };
+
+    var updateSlides = () => {
+      this.slideService.getAll().then((slides) => {
+        visibleIndex = 0;
+
+        for (var i = 0; i < slides.length; i++) {
+          var slide = slides[i];
+
+          slide.index = i;
+          slide.url = "/images/" + slide.image;
+          slide.shouldShow = (index) => { return index == visibleIndex; };
+        }
+
+        scope.slides = slides;
+
+        cycle();
+      });
+    };
+    updateSlides();
+  }
+}
+
+SlideDisplay.register({
+  group: 'slides',
+
+  restrict: 'E',
+  replace: true
+});
+
 class SlideList extends Directive {
   defineInjections() {
     super.defineInjections();
@@ -56914,8 +56962,9 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 
 angular.module("app").run(["$templateCache", function($templateCache) {$templateCache.put("app/templates/controllers/404.html","404");
 $templateCache.put("app/templates/controllers/admin.html","<div class=\"container-fluid content\"><div class=row><div class=col-xs-12><menu></menu></div></div><div class=row><div class=\"col-xs-10 col-xs-offset-1\"><slide_list></slide_list></div></div></div>");
-$templateCache.put("app/templates/controllers/display.html","<div>Hello Display</div>");
+$templateCache.put("app/templates/controllers/display.html","<div><slide_display></slide_display></div>");
 $templateCache.put("app/templates/directives/menu.html","<nav class=\"navbar navbar-default\"><div class=container-fluid><ul class=\"nav navbar-nav\"><li><a href=/admin>Slides</a></li></ul></div></nav>");
+$templateCache.put("app/templates/directives/slides/slide_display.html","<div class=\"slide_container full-screen\"><div ng-repeat=\"slide in slides\" ng-show=slide.shouldShow(slide.index) class=\"slide full-screen\" style=\"background-image: url({{slide.url}})\"></div></div>");
 $templateCache.put("app/templates/directives/slides/slide_list.html","<div><div class=row><div class=\"col-xs-12 buttons\"><button class=\"btn pull-right\" data-toggle=modal data-target=#addSlide>Add Slide</button></div></div><div class=row><div class=col-xs-12><table class=\"table table-bordered table-striped\"><tr><th>Active</th><th>Name</th><th>Text</th><th>Background Color</th><th>Image</th></tr><tr ng-repeat=\"slide in slides\"><td>{{slide.active}}</td><td>{{slide.name}}</td><td>{{slide.text}}</td><td>{{slide.backgroundColor}}</td><td>{{slide.image}}</td></tr></table></div></div><div class=\"modal fade\" id=addSlide role=dialog><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal>&times;</button><h4 class=modal-title>Add New Slide</h4></div><div class=modal-body><fieldset><div><label for=name>Name</label><br><input ng-model=slide.name name=name class=\"form-control\"></div><div><label for=Text>Text</label><br><input ng-model=slide.text name=text class=\"form-control\"></div><div><label for=backgroundColor>Background Color</label><br><color-picker ng-model=slide.backgroundColor color-picker-format=\"\'hex\'\" color-picker-alpha=false color-picker-swatch=false></color-picker></div><div><label for=file>Image</label><br><input file-model=slide.file name=file type=file accept=\"image/*\"></div></fieldset></div><div class=modal-footer><button type=button class=\"btn btn-danger pull-right\" data-dismiss=modal>Cancel</button> <button type=button class=\"btn btn-success pull-left\" data-dismiss=modal ng-click=addSlide()>Save</button></div></div></div></div></div>");}]);
 // TinyColor v1.3.0
 // https://github.com/bgrins/TinyColor
