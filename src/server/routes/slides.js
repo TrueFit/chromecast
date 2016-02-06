@@ -11,8 +11,6 @@ module.exports = (router) => {
   router.post('/slides', (req, res) => {
     var slide = {};
 
-    // TODO: need to name the file after the id of the object
-
     req.busboy.on('file', function (fieldname, file, filename) {
         var fstream = fs.createWriteStream('./release/images/' + filename);
         file.pipe(fstream);
@@ -25,9 +23,9 @@ module.exports = (router) => {
     });
 
     req.busboy.on('finish', () => {
-      console.log(slide);
-
-      res.json({});
+      slideService.update(slide, (obj) => {
+        res.json(obj);
+      });
     })
 
     req.pipe(req.busboy);
