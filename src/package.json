@@ -14,9 +14,11 @@
   "license": "MIT",
   "homepage": "https://bitbucket.org/truefit/chromecast#readme",
   "dependencies": {
-    "body-parser": "^1.14.2",
+    "connect-busboy": "0.0.2",
     "express": "^4.13.3",
     "glob": "^6.0.3",
+    "kerberos": "0.0.18",
+    "mongoose": "^4.4.1",
     "requestify": "^0.1.17",
     "use-strict": "^1.0.1"
   },

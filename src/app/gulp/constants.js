@@ -10,6 +10,9 @@ process.constants = {
     "bower_components/angular/angular.js",
     "bower_components/angular-route/angular-route.js",
     "bower_components/angular-cookies/angular-cookies.js",
+    "bower_components/tinycolor/dist/tinycolor-min.js",
+    "bower_components/angular-color-picker/angularjs-color-picker.min.js",
+    "bower_components/ng-file-upload/ng-file-upload.js",
 
     "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"
   ],

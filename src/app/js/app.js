@@ -1,1 +1,1 @@
-angular.module(window.appName, ["ngRoute"]);
+angular.module(window.appName, ["ngRoute", "color.picker"]);

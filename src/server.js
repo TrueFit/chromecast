@@ -3,7 +3,7 @@ require("use-strict");
 var express = require('express');
 var app = express();
 var router = express.Router();
-var bodyParser = require('body-parser');
+var busboy = require('connect-busboy');
 var path = require('path');
 
 // allow cors
@@ -13,9 +13,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-// configure to use body parser
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// configure to use busboy
+app.use(busboy({ immediate: true }));
 
 // load routes
 var glob = require('glob');

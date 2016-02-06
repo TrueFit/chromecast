@@ -3,6 +3,10 @@ class Directive extends Base {
   }
 
   static defaultTemplatePath(opts, name) {
+    if (opts.restrict != "E") {
+      return null;
+    }
+    
     var undername = name.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
     var filename = undername + '.html';
     var path = 'app/templates/directives/';
@@ -10,7 +14,7 @@ class Directive extends Base {
     if (opts.group) {
       path = path + opts.group + '/'
     }
-   
+
     return path + filename;
   }
 
