@@ -1,1 +1,2 @@
-src/release/images
+release/images
+/node_modules
