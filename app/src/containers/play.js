@@ -5,12 +5,25 @@ import { connect } from 'react-redux';
 class Play extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      src: "https://unsplash.it/1920/1080"
+    };
+
+    let i = 0;
+    setInterval(() => {
+      this.setState({
+        src: "https://unsplash.it/1920/1080?random&" + i
+      });
+
+      i++;
+    }, 5000)
   }
 
   render() {
     return (
       <div>
-        <img src="http://loremflickr.com/1920/1080" />
+        <img src={this.state.src} />
       </div>
     );
   }
