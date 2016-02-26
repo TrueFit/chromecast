@@ -6,11 +6,7 @@
   <body>
     <div id="app"></div>
 
-    <!-- Google puts cast as a global which makes react sad, use this script to attach to window so we can access it -->
-    <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
-    <script>
-      window.cast = cast;
-    </script>
+    <script type="text/javascript" src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
 
     <script src="bundle.js"></script>
   </body>
