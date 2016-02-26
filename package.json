@@ -19,7 +19,6 @@
     "glob": "^6.0.3",
     "kerberos": "0.0.18",
     "mongoose": "^4.4.1",
-    "nodecastor": "^0.1.8",
     "requestify": "^0.1.17",
     "use-strict": "^1.0.1"
   },
