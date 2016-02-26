@@ -9,13 +9,17 @@ class Play extends Component {
     super(props);
 
     this.state = {
-      messages: []
+      messages: ["Hello There"]
     };
 
     const castAway = new window.CastAway();
     const receiver = castAway.receive();
 
+    console.log("receiver", receiver);
+
     receiver.on('displayMessage', (data) => {
+      console.log("message received", data);
+
       this.setState({
         messages: [ ...this.state.messages, data.message ]
       })

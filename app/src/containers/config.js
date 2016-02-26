@@ -52,7 +52,7 @@ class Config extends Component {
       }
 
       this.setState({
-        messages: ""
+        message: ""
       });
 
       console.log("message sent", data);
