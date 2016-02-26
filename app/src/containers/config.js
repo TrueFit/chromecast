@@ -25,8 +25,16 @@ class Config extends Component {
           return;
         }
 
+        console.log(s);
+
         this.session = s;
       });
+    });
+
+    castAway.on('existingMediaFound', (s) => {
+      console.log(s);
+
+      this.session = s;
     });
 
     castAway.initialize((err, data) => {
@@ -35,7 +43,7 @@ class Config extends Component {
         return;
       }
 
-      console.log("initialized", data);
+      console.log("initialized");
     });
   }
 
