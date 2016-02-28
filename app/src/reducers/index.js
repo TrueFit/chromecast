@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
-import Images from './images';
+import CastState from './cast_state.js';
+import CastSenderSession from './cast_sender_session';
 
 const rootReducer = combineReducers({
-  images: Images
+  castState: CastState,
+  castSender: CastSenderSession
 });
 
 export default rootReducer;
