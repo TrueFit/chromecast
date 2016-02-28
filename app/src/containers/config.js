@@ -8,6 +8,8 @@ class Config extends Component {
     return (
       <div>
         <Menu />
+
+        
       </div>
     );
   }
