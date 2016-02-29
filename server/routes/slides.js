@@ -1,6 +1,9 @@
 var slideService = require('../services/slide_service.js');
 var fs = require('fs');
 
+// TODO:
+var formidable = require('formidable');
+
 module.exports = (router) => {
 	router.get('/slides', (req, res) => {
     slideService.findAll((slides) => {

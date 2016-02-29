@@ -1,11 +1,18 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
 import CastState from './cast_state.js';
 import CastSenderSession from './cast_sender_session';
 
+import Casts from './casts';
+
 const rootReducer = combineReducers({
+  form: formReducer,
+
   castState: CastState,
-  castSender: CastSenderSession
+  castSender: CastSenderSession,
+
+  casts: Casts
 });
 
 export default rootReducer;

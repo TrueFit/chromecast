@@ -1,2 +1,35 @@
 @import "../../node_modules/foundation-apps/scss/settings";
 @import "../../node_modules/foundation-apps/scss/foundation";
+
+.spacer {
+  margin: 5px;
+}
+
+/* modal */
+.modal-header {
+  padding: 10px;
+  border-bottom: solid #ccc 2px;
+}
+
+.modal-body {
+  padding: 10px;
+}
+
+.modal-footer {
+  border-top: solid #ccc 2px;
+  padding: 10px;
+  height: 60px;
+
+  button {
+    height: 40px;
+    width: 100px;
+
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Cast */
+.cast-modal {
+  width: 300px !important;
+}
