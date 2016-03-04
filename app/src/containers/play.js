@@ -21,7 +21,7 @@ class Play extends Component {
       });
 
       i++;
-    }, 5000)
+    }, 5000);
   }
 
   render() {

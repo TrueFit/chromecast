@@ -15,5 +15,14 @@ module.exports = (router) => {
     }).catch((err) => {
       next(err);
     });
-  })
+  });
+
+  router.delete('/casts/:cast_id', (req, res) => {
+    castService.delete(req.params.cast_id).then(() => {
+      res.json({});
+    }).catch((err) => {
+      next(err);
+    });
+  });
+
 }

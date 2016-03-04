@@ -5,12 +5,13 @@ import { reduxForm } from 'redux-form';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 import TextField from 'material-ui/lib/text-field';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 import { SelfBindingComponent } from '../sugar';
 import { updateCast, loadCasts } from '../actions';
 import { logError } from '../suppport';
 
-class Cast extends SelfBindingComponent {
+class CastDialog extends SelfBindingComponent {
   constructor(props) {
     super(props);
 
@@ -26,6 +27,13 @@ class Cast extends SelfBindingComponent {
     this.props.resetForm();
   }
 
+  editCast(cast) {
+    this.props.fields._id.onChange(cast._id);
+    this.props.fields.name.onChange(cast.name);
+
+    this.open();
+  }
+
   submit(form) {
     this.props.updateCast(form).then(() => {
       this.props.loadCasts();
@@ -34,8 +42,6 @@ class Cast extends SelfBindingComponent {
   }
 
   render() {
-    this.props.open(this.open);
-
     const { handleSubmit, fields: { name } } = this.props;
 
     const actions = [
@@ -54,8 +60,12 @@ class Cast extends SelfBindingComponent {
       />
     ];
 
+    this.props.setEditCast(this.editCast);
+
     return (
       <div>
+        <RaisedButton label="Add Cast" primary={true} onTouchTap={this.open} />
+
         <Dialog
           title="Add / Edit Cast"
           actions={actions}
@@ -80,5 +90,5 @@ class Cast extends SelfBindingComponent {
 
 export default reduxForm({
   form: 'cast',
-  fields: ['name']
-}, null, { updateCast, loadCasts })(Cast);
+  fields: ['_id', 'name']
+}, null, { updateCast, loadCasts })(CastDialog);

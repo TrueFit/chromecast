@@ -1,7 +1,20 @@
 var Promise = require('promise');
 
 module.exports = {
-  update(object, type) {
+  findAll: (type) => {
+    return new Promise((resolve, reject) => {
+      type.find({}, (err, objs) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve(objs);
+  		});
+    });
+  },
+
+  update: (object, type) => {
     return new Promise((resolve, reject) => {
       var perform = (obj) => {
         for (var prop in object) {
@@ -31,6 +44,19 @@ module.exports = {
       else {
         perform(new type());
       }
+    });
+  },
+
+  delete: (id, type) => {
+    return new Promise((resolve, reject) => {
+      type.remove({_id:id}, (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve();
+      });
     });
   }
 };

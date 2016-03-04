@@ -11,7 +11,15 @@ export default class Http {
     return axios.get(`${this.ROOT_URL}/${relativeUrl}`);
   }
 
+  put(relativeUrl, body) {
+    return axios.put(`${this.ROOT_URL}/${relativeUrl}`, body);
+  }
+
   post(relativeUrl, body) {
     return axios.post(`${this.ROOT_URL}/${relativeUrl}`, body);
+  }
+
+  delete(relativeUrl) {
+    return axios.delete(`${this.ROOT_URL}/${relativeUrl}`);
   }
 }

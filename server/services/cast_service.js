@@ -3,24 +3,20 @@ var util = require('./util.js');
 
 var db = require('../services/database.js');
 var Cast = db.model('casts', {
-	name: String
+	name: String,
+  update: Date
 });
 
 module.exports = {
-	findAll: function() {
-    return new Promise((resolve, reject) => {
-      Cast.find({}, function(err, casts) {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        resolve(casts);
-  		});
-    });
+	findAll: () => {
+    return util.findAll(Cast);
 	},
 
-  update: function(cast) {
+  update: (cast) => {
     return util.update(cast, Cast);
+  },
+
+  delete: (castId) => {
+    return util.delete(castId, Cast);
   }
 }

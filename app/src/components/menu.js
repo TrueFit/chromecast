@@ -36,7 +36,7 @@ export class Menu extends SelfBindingComponent {
     return (
       <div>
         <AppBar
-          title="Chromecast"
+          title={this.props.name}
           onLeftIconButtonTouchTap={this.toggle}
         />
         <LeftNav
