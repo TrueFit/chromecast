@@ -4,6 +4,7 @@ import Http from './http';
 // export
 export const GET = "GET";
 export const POST = "POST";
+export const POST_FILE = "POST_FILE";
 export const PUT = "PUT";
 export const DELETE = "DELETE";
 
@@ -21,6 +22,10 @@ export const apiExecutor = (apiStruct) => {
       case POST:
         request = http.post(apiStruct.url, apiStruct.data);
         break;
+
+      case POST_FILE:
+      request = http.postFile(apiStruct.url, apiStruct.data);
+      break;
 
       case PUT:
         request = http.put(apiStruct.url, apiStruct.data);

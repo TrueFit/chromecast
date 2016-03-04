@@ -19,6 +19,12 @@ export default class Http {
     return axios.post(`${this.ROOT_URL}/${relativeUrl}`, body);
   }
 
+  postFile(relativeUrl, data) {
+    return axios.post(`${this.ROOT_URL}/${relativeUrl}`, data, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+  }
+
   delete(relativeUrl) {
     return axios.delete(`${this.ROOT_URL}/${relativeUrl}`);
   }

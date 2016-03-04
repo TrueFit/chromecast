@@ -9,7 +9,7 @@ export const updateCast = (cast) => {
     url: 'casts',
     data: cast,
 
-    successType: UPDATE_CAST_FAILURE,
-    failureType: UPDATE_CAST_SUCCESSFUL
+    successType: UPDATE_CAST_SUCCESSFUL,
+    failureType: UPDATE_CAST_FAILURE
   });
 };

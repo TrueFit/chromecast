@@ -1,53 +1,24 @@
+var Promise = require('promise');
+var util = require('./util.js');
+
 var db = require('../services/database.js')
 var Slide = db.model('slides', {
-	name: String,
-	order: Number,
-  active: Boolean,
-  text: String,
-  backgroundColor: String,
-  image: String
+  cast_id: String,
+  name: String,
+  file: String
 });
 
 module.exports = {
-	findAll: function(callback) {
-		Slide.find({}, function(err, slides) {
-      if (err) {
-        console.log(err);
-      }
-
-			callback(err ? [] : slides);
-		});
+  findAll: () => {
+    return util.findAll(Slide);
 	},
 
-  update: function(slide, callback) {
-    var updateSlide = (obj) => {
-      for (var prop in slide) {
-        obj[prop] = slide[prop];
-      }
+  update: (slide) => {
+    console.log(slide);
+    return util.update(slide, Slide);
+  },
 
-      obj.save((err) => {
-        if (err) {
-          console.log(err);
-          throw err;
-        }
-
-        callback(obj);
-      });
-    };
-
-    if (slide._id) {
-      Slide.findOne({_id: slide._id}, (err, obj) => {
-        if (err) {
-          console.log(err);
-          throw err;
-        }
-
-        updateSlide(obj);
-      });
-    }
-    else {
-      var obj = new Slide();
-      updateSlide(obj);
-    }
+  delete: (slideId) => {
+    return util.delete(slide, Slide);
   }
 }

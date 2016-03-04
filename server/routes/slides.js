@@ -1,36 +1,39 @@
 var slideService = require('../services/slide_service.js');
-var fs = require('fs');
-
-// TODO:
-var formidable = require('formidable');
+var multer = require('multer');
+var upload = multer({dest:'./release/images/'});
 
 module.exports = (router) => {
-	router.get('/slides', (req, res) => {
-    slideService.findAll((slides) => {
-  		res.json(slides);
+  router.get('/slides', (req, res) => {
+    slideService.findAll().then((slides) => {
+      res.json(slides);
+    }).catch((err) => {
+      next(err);
     });
-	});
+  });
 
-  router.post('/slides', (req, res) => {
-    var slide = {};
+  router.post('/slides', upload.any(), (req, res) => {
+    var s = {
+      cast_id: req.body.cast_id,
+      name: req.body.name,
+      file: req.files[0].filename
+    };
+    
+    if (req.body._id) {
+      s._id = req.body._id;
+    }
 
-    req.busboy.on('file', function (fieldname, file, filename) {
-        var fstream = fs.createWriteStream('./release/images/' + filename);
-        file.pipe(fstream);
-
-        slide.image = filename;
+    slideService.update(s).then((slide) => {
+      res.json(slide);
+    }).catch((err) => {
+      next(err);
     });
+  });
 
-    req.busboy.on('field', (fieldname, value) => {
-      slide[fieldname] = value;
+  router.delete('/slides/:slide_id', (req, res) => {
+    slideService.delete(req.params.slide_id).then(() => {
+      res.json({});
+    }).catch((err) => {
+      next(err);
     });
-
-    req.busboy.on('finish', () => {
-      slideService.update(slide, (obj) => {
-        res.json(obj);
-      });
-    })
-
-    req.pipe(req.busboy);
-  })
+  });
 }
