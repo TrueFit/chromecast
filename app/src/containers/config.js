@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
+import RaisedButton from 'material-ui/lib/raised-button';
+
 import { SelfBindingComponent } from '../sugar';
 import { Menu } from '../components/';
 import Cast from './cast';
@@ -15,30 +17,46 @@ class Config extends SelfBindingComponent {
   renderCasts() {
     return this.props.casts.map((cast) => {
       return (
-        <div key={cast._id}>
-          {cast.name}
-        </div>
+        <tr key={cast._id}>
+          <td>{cast.name}</td>
+          <td>Edit</td>
+          <td>Delete</td>
+        </tr>
       );
-    })
+    });
   }
 
   render() {
-    const addCastTrigger = (<button className="button" onClick={()=>this.tiggerCast()}>Add Cast</button>);
+    const addCastTrigger = (
+      <RaisedButton label="Add Cast" primary={true} onTouchTap={this.triggerCast} />
+    );
 
     return (
       <div>
         <Menu />
-        <Cast show={(m) => this.tiggerCast = m} />
+        <Cast open={(m) => this.triggerCast = m} />
 
-        <div className="spacer" />
-
-        <div className="vertical grid-block">
-          <div className="grid-block align-right">
-            {addCastTrigger}
+        <div className="container">
+          <div className="spacer" />
+          <div className="row">
+            <div className="twelve columns">
+              {addCastTrigger}
+            </div>
           </div>
-          <div className="grid-block">
-            <div className="grid-block">
-              { this.renderCasts() }
+          <div className="row">
+            <div className="twelve columns">
+              <table className="u-full-width">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.renderCasts()}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -50,7 +68,7 @@ class Config extends SelfBindingComponent {
 const mapStateToProps = (state) => {
   return {
     casts: state.casts
-  }
+  };
 };
 
 export default connect(mapStateToProps, { loadCasts })(Config);

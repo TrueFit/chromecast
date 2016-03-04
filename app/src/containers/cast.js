@@ -2,50 +2,78 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
+import Dialog from 'material-ui/lib/dialog';
+import FlatButton from 'material-ui/lib/flat-button';
+import TextField from 'material-ui/lib/text-field';
+
 import { SelfBindingComponent } from '../sugar';
 import { updateCast, loadCasts } from '../actions';
 import { logError } from '../suppport';
 
-import Modal from 'boron/FadeModal';
-
 class Cast extends SelfBindingComponent {
-  show() {
-    this.modal.show();
+  constructor(props) {
+    super(props);
+
+    this.state = {open: false};
   }
 
-  hide() {
-    this.modal.hide();
+  open() {
+    this.setState({open: true});
+  }
+
+  close() {
+    this.setState({open: false});
+    this.props.resetForm();
   }
 
   submit(form) {
     this.props.updateCast(form).then(() => {
       this.props.loadCasts();
+      this.close();
     }).catch(logError);
   }
 
   render() {
-    this.props.show(this.show);
+    this.props.open(this.open);
 
     const { handleSubmit, fields: { name } } = this.props;
 
+    const actions = [
+      <FlatButton
+        key="Cancel"
+        label="Cancel"
+        secondary={true}
+        onTouchTap={this.close}
+      />,
+      <FlatButton
+        key="Submit"
+        label="Submit"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={handleSubmit(this.submit)}
+      />
+    ];
+
     return (
-      <Modal ref={m=>this.modal=m} className="cast-modal">
-        <form onSubmit={handleSubmit(this.submit)}>
-          <div className="modal-header">
-            <h3>Add / Edit Cast</h3>
-          </div>
-          <div className="modal-body">
+      <div>
+        <Dialog
+          title="Add / Edit Cast"
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.hide}
+        >
+          <form ref="form" onSubmit={handleSubmit(this.submit)}>
             <label>
-              Name
-              <input type="text" {...name} />
+              <TextField
+               hintText="Name"
+               floatingLabelText="Name"
+               {...name}
+             />
             </label>
-          </div>
-          <div className="modal-footer grid-block align-justify">
-            <button className="success button" type="submit" onClick={this.hide}>Save</button>
-            <button className="alert button" type="button" onClick={this.hide}>Cancel</button>
-          </div>
-        </form>
-      </Modal>
+          </form>
+        </Dialog>
+      </div>
     );
   }
 }

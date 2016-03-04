@@ -9,7 +9,12 @@ import reducers from './reducers/index';
 import { Router, browserHistory } from 'react-router';
 import routes from './routes';
 
-import './styles/styles.scss'; //Yep, that's right. You can import SASS/CSS files too! Webpack will run the associated loader and plug this into the page.
+// styles
+import './styles/styles.scss';
+
+// inject click
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 // create the store
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
