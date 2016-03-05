@@ -4,7 +4,7 @@ var util = require('./util.js');
 var db = require('../services/database.js');
 var Cast = db.model('casts', {
 	name: String,
-  update: Date
+  delay: Number
 });
 
 module.exports = {

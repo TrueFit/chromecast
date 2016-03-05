@@ -30,6 +30,7 @@ class CastDialog extends SelfBindingComponent {
   editCast(cast) {
     this.props.fields._id.onChange(cast._id);
     this.props.fields.name.onChange(cast.name);
+    this.props.fields.delay.onChange(cast.delay);
 
     this.open();
   }
@@ -42,7 +43,7 @@ class CastDialog extends SelfBindingComponent {
   }
 
   render() {
-    const { handleSubmit, fields: { name } } = this.props;
+    const { handleSubmit, fields: { name, delay } } = this.props;
 
     const actions = [
       <FlatButton
@@ -82,6 +83,13 @@ class CastDialog extends SelfBindingComponent {
                {...name}
              />
             </label>
+            <label>
+              <TextField
+               hintText="Delay"
+               floatingLabelText="Delay"
+               {...delay}
+             />
+            </label>
           </form>
         </Dialog>
       </div>
@@ -91,5 +99,5 @@ class CastDialog extends SelfBindingComponent {
 
 export default reduxForm({
   form: 'cast',
-  fields: ['_id', 'name']
+  fields: ['_id', 'name', 'delay']
 }, null, { updateCast, loadCasts })(CastDialog);

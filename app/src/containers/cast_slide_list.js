@@ -36,7 +36,7 @@ class CastSlideList extends SelfBindingComponent {
             {slide.sort}
           </td>
           <td>
-            <img className="image-preview" src={`http://localhost:3005/images/${slide.file}`} />
+            <img className="image-preview" src={`/images/${slide.file}`} />
           </td>
           <td>
             <FlatButton label="Edit" secondary={true} onTouchTap={() => this.edit(slide)} />
@@ -52,7 +52,7 @@ class CastSlideList extends SelfBindingComponent {
   render() {
     return (
       <tr>
-        <td colSpan="3">
+        <td colSpan="4">
           <table className="u-full-width slide-table">
             <thead>
               <tr>

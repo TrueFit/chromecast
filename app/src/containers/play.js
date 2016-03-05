@@ -1,36 +1,91 @@
-
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import _ from 'underscore';
+
+import { SelfBindingComponent } from '../sugar';
+import { loadCasts, loadSlides } from '../actions';
+import { logError } from '../suppport';
+
 import CastAway from '../../vendor/castaway/cast-away';
 
-class Play extends Component {
+class Play extends SelfBindingComponent {
   constructor(props) {
     super(props);
 
-    const castAway = new window.CastAway();
-    this.receiver = castAway.receive();
+    this.state = { src: null };
 
-    this.state = {
-      src: "http://randomimage.setgetgo.com/get.php?key=0&height=1080&width=1920"
-    };
+    // try {
+    //   const castAway = new window.CastAway();
+    //   this.receiver = castAway.receive();
+    // }
+    // catch (err) {
+    //   logError(err);
+    //   this.receiver = null;
+    // }
+  }
 
-    let i = 1;
-    setInterval(() => {
+  componentWillMount() {
+    Promise.all([
+      this.props.loadCasts(),
+      this.props.loadSlides()
+    ]).then(this.applySlides).catch(logError);
+  }
+
+  applySlides() {
+    let delay = 15000;
+
+    // if we have a receiver then restrict to that name
+    let slides = null;
+    if (this.receiver) {
+      const cast = _.findWhere(this.props.casts, {name:this.receiver.friendlyName});
+      if (cast) {
+        slides = _.where(this.props.slides, { cast_id: cast._id });
+        delay = cast.delay;
+      }
+    }
+
+    if (!slides) {
+      slides = this.props.slides;
+    }
+
+    // update logic
+    const updateSlide = (index) => {
+      if (slides.length == 0) {
+        return;
+      }
+
       this.setState({
-        src: `http://randomimage.setgetgo.com/get.php?key=${i}&height=1080&width=1920`
+        src: `/images/${slides[index].file}`
       });
+    };
+    updateSlide(0);
 
+    let i = 0;
+    setInterval(() => {
+      // define index
       i++;
-    }, 5000);
+      if (i >= slides.length) {
+        i=0;
+      }
+
+      // update slide
+      updateSlide(i);
+    }, delay);
   }
 
   render() {
     return (
-      <div>
-        <img src={this.state.src} />
+      <div style={{backgroundImage: `url(${this.state.src})`}} className="full-screen-image">
       </div>
     );
   }
 }
 
-export default connect()(Play);
+const mapStateToProps = (state) => {
+  return {
+    casts: state.casts,
+    slides: state.slides
+  };
+};
+
+export default connect(mapStateToProps, {loadCasts, loadSlides})(Play);
