@@ -14,8 +14,12 @@ class Play extends SelfBindingComponent {
 
     this.state = { src: null };
 
-    // const castAway = new window.CastAway();
-    // this.receiver = castAway.receive();
+    const castAway = new window.CastAway();
+    this.receiver = castAway.receive();
+
+    // this.receiver = {
+    //   friendlyName: "Schwankcast"
+    // };
   }
 
   componentWillMount() {
@@ -26,14 +30,12 @@ class Play extends SelfBindingComponent {
   }
 
   applySlides() {
-    this.receiver.friendlyName = "Schwankcast";
-
     let delay = 15000;
 
     // if we have a receiver then restrict to that name
     let slides = null;
     if (this.receiver) {
-      const cast = _.findWhere(this.props.casts, {name:this.receiver.friendlyName});
+      const cast = _.findWhere(this.props.casts, {name: this.receiver.friendlyName});
       if (cast) {
         slides = _.where(this.props.slides, { cast_id: cast._id });
         delay = cast.delay;
