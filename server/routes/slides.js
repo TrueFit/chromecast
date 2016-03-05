@@ -15,6 +15,7 @@ module.exports = (router) => {
     var s = {
       cast_id: req.body.cast_id,
       name: req.body.name,
+      sort: req.body.sort
     };
 
     // won't be here if new

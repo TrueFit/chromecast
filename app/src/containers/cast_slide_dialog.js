@@ -50,6 +50,7 @@ class CastSlideDialog extends SelfBindingComponent {
     this.props.fields.cast_id.onChange(slide.cast_id);
     this.props.fields._id.onChange(slide._id);
     this.props.fields.name.onChange(slide.name);
+    this.props.fields.sort.onChange(slide.sort);
 
     this.open();
   }
@@ -64,7 +65,7 @@ class CastSlideDialog extends SelfBindingComponent {
   }
 
   render() {
-    const { handleSubmit, fields: { cast_id, name, file } } = this.props;
+    const { handleSubmit, fields: { name, sort, file } } = this.props;
 
     const actions = [
       <FlatButton
@@ -104,6 +105,13 @@ class CastSlideDialog extends SelfBindingComponent {
                {...name}
              />
             </label>
+            <label>
+              <TextField
+               hintText="Sort"
+               floatingLabelText="Sort"
+               {...sort}
+             />
+            </label>
             <DropZone onDrop={(f)=>this.validateFile(file,f)} className="file-input">
               <div>{file.value? "Image Ready" : "Drop png or jpg here"}</div>
             </DropZone>
@@ -116,5 +124,5 @@ class CastSlideDialog extends SelfBindingComponent {
 
 export default reduxForm({
   form: 'slide',
-  fields: ['_id', 'cast_id', 'name', 'file']
+  fields: ['_id', 'cast_id', 'name', 'sort', 'file']
 }, null, { loadSlides, updateSlide })(CastSlideDialog);

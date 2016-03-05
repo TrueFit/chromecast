@@ -29,7 +29,12 @@ class CastSlideList extends SelfBindingComponent {
     return _.where(this.props.slides, { cast_id: this.props.cast._id }).map((slide) => {
       return (
         <tr key={slide._id} className="slide-row">
-          <td>{slide.name}</td>
+          <td>
+            {slide.name}
+          </td>
+          <td>
+            {slide.sort}
+          </td>
           <td>
             <img className="image-preview" src={`http://localhost:3005/images/${slide.file}`} />
           </td>
@@ -48,10 +53,11 @@ class CastSlideList extends SelfBindingComponent {
     return (
       <tr>
         <td colSpan="3">
-          <table className="u-full-width">
+          <table className="u-full-width slide-table">
             <thead>
               <tr>
                 <th>Slide</th>
+                <th>Sort</th>
                 <th>Image</th>
                 <th className="small-column"></th>
                 <th className="small-column">

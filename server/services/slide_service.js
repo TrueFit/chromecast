@@ -5,7 +5,8 @@ var db = require('../services/database.js')
 var Slide = db.model('slides', {
   cast_id: String,
   name: String,
-  file: String
+  file: String,
+  sort: Number
 });
 
 module.exports = {
@@ -14,7 +15,6 @@ module.exports = {
 	},
 
   update: (slide) => {
-    console.log(slide);
     return util.update(slide, Slide);
   },
 
