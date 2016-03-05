@@ -16,7 +16,7 @@ class CastSlideList extends SelfBindingComponent {
   }
 
   edit(slide) {
-    // this.showEditDialog(cast);
+    this.showEditDialog(slide);
   }
 
   delete(slide) {
@@ -55,7 +55,7 @@ class CastSlideList extends SelfBindingComponent {
                 <th>Image</th>
                 <th className="small-column"></th>
                 <th className="small-column">
-                  <CastSlideDialog cast={this.props.cast} />
+                  <CastSlideDialog cast={this.props.cast} setEditSlide={(d)=>this.showEditDialog = d} />
                 </th>
               </tr>
             </thead>

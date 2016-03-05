@@ -46,12 +46,13 @@ class CastSlideDialog extends SelfBindingComponent {
     }
   }
 
-  // editCast(cast) {
-  //   this.props.fields._id.onChange(cast._id);
-  //   this.props.fields.name.onChange(cast.name);
-  //
-  //   this.open();
-  // }
+  editSlide(slide) {
+    this.props.fields.cast_id.onChange(slide.cast_id);
+    this.props.fields._id.onChange(slide._id);
+    this.props.fields.name.onChange(slide.name);
+
+    this.open();
+  }
 
   submit(form) {
     form.cast_id = this.props.cast._id;
@@ -81,7 +82,7 @@ class CastSlideDialog extends SelfBindingComponent {
       />
     ];
 
-    // this.props.setEditCast(this.editCast);
+    this.props.setEditSlide(this.editSlide);
 
     return (
       <div>

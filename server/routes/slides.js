@@ -15,11 +15,16 @@ module.exports = (router) => {
     var s = {
       cast_id: req.body.cast_id,
       name: req.body.name,
-      file: req.files[0].filename
     };
 
+    // won't be here if new
     if (req.body._id) {
       s._id = req.body._id;
+    }
+
+    // won't be here potentially on update
+    if (req.files.length > 0) {
+      s.file = req.files[0].filename
     }
 
     slideService.update(s).then((slide) => {
