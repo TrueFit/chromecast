@@ -4,7 +4,7 @@ import _ from 'underscore';
 
 import { SelfBindingComponent } from '../sugar';
 import { loadCasts, loadSlides } from '../actions';
-import { logError } from '../suppport';
+import { logError, ROOT_URL } from '../suppport';
 
 import CastAway from '../../vendor/castaway/cast-away';
 
@@ -14,8 +14,8 @@ class Play extends SelfBindingComponent {
 
     this.state = { src: null };
 
-    const castAway = new window.CastAway();
-    this.receiver = castAway.receive();
+    // const castAway = new window.CastAway();
+    // this.receiver = castAway.receive();
   }
 
   componentWillMount() {
@@ -26,6 +26,8 @@ class Play extends SelfBindingComponent {
   }
 
   applySlides() {
+    this.receiver.friendlyName = "Schwankcast";
+
     let delay = 15000;
 
     // if we have a receiver then restrict to that name
@@ -42,6 +44,8 @@ class Play extends SelfBindingComponent {
       slides = this.props.slides;
     }
 
+    slides = _.sortBy(slides, 'sort');
+
     // update logic
     const updateSlide = (index) => {
       if (slides.length == 0) {
@@ -49,7 +53,7 @@ class Play extends SelfBindingComponent {
       }
 
       this.setState({
-        src: `/images/${slides[index].file}`
+        src: `${ROOT_URL}/images/${slides[index].file}`
       });
     };
     updateSlide(0);

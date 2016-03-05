@@ -9,6 +9,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import { SelfBindingComponent } from '../sugar';
 import CastSlideDialog from './cast_slide_dialog';
 import { loadSlides, deleteSlide } from '../actions';
+import { ROOT_URL } from '../suppport';
 
 class CastSlideList extends SelfBindingComponent {
   componentWillMount() {
@@ -36,7 +37,7 @@ class CastSlideList extends SelfBindingComponent {
             {slide.sort}
           </td>
           <td>
-            <img className="image-preview" src={`/images/${slide.file}`} />
+            <img className="image-preview" src={`${ROOT_URL}/images/${slide.file}`} />
           </td>
           <td>
             <FlatButton label="Edit" secondary={true} onTouchTap={() => this.edit(slide)} />

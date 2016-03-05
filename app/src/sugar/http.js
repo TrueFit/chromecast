@@ -1,10 +1,11 @@
 // import
 import axios from 'axios';
+import { ROOT_URL } from '../suppport';
 
 // export
 export default class Http {
   constructor() {
-    this.ROOT_URL = "/api";
+    this.ROOT_URL = `${ROOT_URL}/api`;
   }
 
   get(relativeUrl) {
