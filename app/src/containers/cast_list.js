@@ -62,9 +62,7 @@ class CastList extends SelfBindingComponent {
                   <th>Cast</th>
                   <th className="small-column"></th>
                   <th className="small-column">
-                    <div className="u-pull-right">
-                      <CastDialog setEditCast={(m)=>this.showEditDialog=m} />
-                    </div>
+                    <CastDialog setEditCast={(m)=>this.showEditDialog=m} />
                   </th>
                 </tr>
               </thead>

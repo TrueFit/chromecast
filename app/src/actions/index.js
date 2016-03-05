@@ -6,3 +6,4 @@ export * from './delete_cast';
 
 export * from './load_slides';
 export * from './update_slide';
+export * from './delete_slide';

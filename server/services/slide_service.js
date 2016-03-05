@@ -19,6 +19,6 @@ module.exports = {
   },
 
   delete: (slideId) => {
-    return util.delete(slide, Slide);
+    return util.delete(slideId, Slide);
   }
 }

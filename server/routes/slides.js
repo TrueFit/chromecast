@@ -17,7 +17,7 @@ module.exports = (router) => {
       name: req.body.name,
       file: req.files[0].filename
     };
-    
+
     if (req.body._id) {
       s._id = req.body._id;
     }

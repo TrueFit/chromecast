@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 
 import { SelfBindingComponent } from '../sugar';
 import CastSlideDialog from './cast_slide_dialog';
-import { loadSlides } from '../actions';
+import { loadSlides, deleteSlide } from '../actions';
 
 class CastSlideList extends SelfBindingComponent {
   componentWillMount() {
@@ -20,9 +20,9 @@ class CastSlideList extends SelfBindingComponent {
   }
 
   delete(slide) {
-    // this.props.deleteCast(cast._id).then(() => {
-    //   this.props.loadCasts();
-    // });
+    this.props.deleteSlide(slide._id).then(() => {
+      this.props.loadSlides();
+    });
   }
 
   renderSlides() {
@@ -55,9 +55,7 @@ class CastSlideList extends SelfBindingComponent {
                 <th>Image</th>
                 <th className="small-column"></th>
                 <th className="small-column">
-                  <div className="u-pull-right">
-                    <CastSlideDialog cast={this.props.cast} />
-                  </div>
+                  <CastSlideDialog cast={this.props.cast} />
                 </th>
               </tr>
             </thead>
@@ -77,4 +75,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { loadSlides })(CastSlideList);
+export default connect(mapStateToProps, { loadSlides, deleteSlide })(CastSlideList);
