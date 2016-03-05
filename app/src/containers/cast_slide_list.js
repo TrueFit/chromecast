@@ -1,39 +1,80 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
+import _ from 'underscore';
+
 import RaisedButton from 'material-ui/lib/raised-button';
 import FlatButton from 'material-ui/lib/flat-button';
 
 import { SelfBindingComponent } from '../sugar';
 import CastSlideDialog from './cast_slide_dialog';
-// import { loadCasts, deleteCast } from '../actions';
+import { loadSlides } from '../actions';
 
 class CastSlideList extends SelfBindingComponent {
   componentWillMount() {
-    // this.props.loadCasts();
+    this.props.loadSlides();
   }
 
-  edit(cast) {
+  edit(slide) {
     // this.showEditDialog(cast);
   }
 
-  delete(cast) {
+  delete(slide) {
     // this.props.deleteCast(cast._id).then(() => {
     //   this.props.loadCasts();
     // });
+  }
+
+  renderSlides() {
+    return _.where(this.props.slides, { cast_id: this.props.cast._id }).map((slide) => {
+      return (
+        <tr key={slide._id} className="slide-row">
+          <td>{slide.name}</td>
+          <td>
+            <img className="image-preview" src={`http://localhost:3005/images/${slide.file}`} />
+          </td>
+          <td>
+            <FlatButton label="Edit" secondary={true} onTouchTap={() => this.edit(slide)} />
+          </td>
+          <td>
+            <FlatButton label="Delete" secondary={true} onTouchTap={() => this.delete(slide)} />
+          </td>
+        </tr>
+      );
+    });
   }
 
   render() {
     return (
       <tr>
         <td colSpan="3">
-          <div className="u-pull-right">
-            <CastSlideDialog cast={this.props.cast} />
-          </div>
+          <table className="u-full-width">
+            <thead>
+              <tr>
+                <th>Slide</th>
+                <th>Image</th>
+                <th className="small-column"></th>
+                <th className="small-column">
+                  <div className="u-pull-right">
+                    <CastSlideDialog cast={this.props.cast} />
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderSlides()}
+            </tbody>
+          </table>
         </td>
       </tr>
     );
   }
 }
 
-export default connect(null, { })(CastSlideList);
+const mapStateToProps = (state) => {
+  return {
+    slides: state.slides
+  };
+};
+
+export default connect(mapStateToProps, { loadSlides })(CastSlideList);

@@ -26,7 +26,7 @@ class CastList extends SelfBindingComponent {
 
   renderCastRow(cast) {
     return (
-      <tr key={cast._id}>
+      <tr key={cast._id} className="cast-row">
         <td>{cast.name}</td>
         <td>
           <FlatButton label="Edit" secondary={true} onTouchTap={() => this.edit(cast)} />
@@ -56,19 +56,16 @@ class CastList extends SelfBindingComponent {
       <div className="container">
         <div className="row">
           <div className="twelve columns">
-            <div className="u-pull-right">
-              <CastDialog setEditCast={(m)=>this.showEditDialog=m} />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="twelve columns">
             <table className="u-full-width">
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th>Cast</th>
                   <th className="small-column"></th>
-                  <th className="small-column"></th>
+                  <th className="small-column">
+                    <div className="u-pull-right">
+                      <CastDialog setEditCast={(m)=>this.showEditDialog=m} />
+                    </div>
+                  </th>
                 </tr>
               </thead>
               <tbody>

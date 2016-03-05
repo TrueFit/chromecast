@@ -70,6 +70,7 @@ class CastDialog extends SelfBindingComponent {
           title="Add / Edit Cast"
           actions={actions}
           modal={false}
+          contentStyle={{width:310}}
           open={this.state.open}
           onRequestClose={this.hide}
         >

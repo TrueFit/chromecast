@@ -9,7 +9,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import DropZone from 'react-dropzone';
 
 import { SelfBindingComponent } from '../sugar';
-import { updateSlide } from '../actions';
+import { loadSlides, updateSlide } from '../actions';
 import { logError } from '../suppport';
 
 class CastSlideDialog extends SelfBindingComponent {
@@ -54,8 +54,10 @@ class CastSlideDialog extends SelfBindingComponent {
   // }
 
   submit(form) {
-    this.props.fields.cast_id.onChange(this.props.cast._id);
+    form.cast_id = this.props.cast._id;
     this.props.updateSlide(form).then(() => {
+      this.props.loadSlides();
+
       this.close();
     }).catch(logError);
   }
@@ -89,6 +91,7 @@ class CastSlideDialog extends SelfBindingComponent {
           title="Add / Edit Slide"
           actions={actions}
           modal={false}
+          contentStyle={{width:310}}
           open={this.state.open}
           onRequestClose={this.hide}
         >
@@ -113,4 +116,4 @@ class CastSlideDialog extends SelfBindingComponent {
 export default reduxForm({
   form: 'slide',
   fields: ['_id', 'cast_id', 'name', 'file']
-}, null, { updateSlide })(CastSlideDialog);
+}, null, { loadSlides, updateSlide })(CastSlideDialog);

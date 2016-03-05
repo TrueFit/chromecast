@@ -5,6 +5,7 @@ import CastState from './cast_state.js';
 import CastSenderSession from './cast_sender_session';
 
 import Casts from './casts';
+import Slides from './slides';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   castState: CastState,
   castSender: CastSenderSession,
 
-  casts: Casts
+  casts: Casts,
+  slides: Slides
 });
 
 export default rootReducer;
