@@ -14,14 +14,8 @@ class Play extends SelfBindingComponent {
 
     this.state = { src: null };
 
-    // try {
-    //   const castAway = new window.CastAway();
-    //   this.receiver = castAway.receive();
-    // }
-    // catch (err) {
-    //   logError(err);
-    //   this.receiver = null;
-    // }
+    const castAway = new window.CastAway();
+    this.receiver = castAway.receive();
   }
 
   componentWillMount() {

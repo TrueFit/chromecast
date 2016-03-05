@@ -4,7 +4,7 @@ import axios from 'axios';
 // export
 export default class Http {
   constructor() {
-    this.ROOT_URL = "http://localhost:3005/api";
+    this.ROOT_URL = "/api";
   }
 
   get(relativeUrl) {
