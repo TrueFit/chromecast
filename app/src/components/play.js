@@ -4,42 +4,62 @@ import _ from 'underscore';
 
 import { loadCasts,loadSlides, checkLastCastUpdate } from '../actions';
 import { Empty, Image } from './slides';
-import { SelfBindingComponent, logError } from '../support';
+import { SelfBindingComponent, DEBUG, logError } from '../support';
 
 import ReactCSSTransitionReplace from 'react-css-transition-replace';
 import CastAway from '../../vendor/castaway/cast-away';
+
+// Note from josh:
+//  I do a bit here outside of state. this is because a state update fires the render method
+//  and I dont want to do that to cycle the images. As always open to suggestions of a
+//  better way :)
 
 class Play extends SelfBindingComponent {
   constructor(props) {
     super(props);
 
-    // setup chromecast
-    // const castAway = new window.CastAway();
-    // this.receiver = castAway.receive();
-
-    this.receiver = {
-      friendlyName: "Schwankcast"
-    };
-
+    // state
     this.state = {
+      receiverName: '',
       slideIndex: 0
     };
 
-    // handle slide show (we use timeout so the delay can change)
-    this.delay = 15000;
-    const changeSlide = () => {
-      if (this.slides) {
-        const index = this.state.slideIndex + 1;
+    // start up
+    this.connectToChromecast(DEBUG);
+    this.playSlideShow();
+    this.checkForUpdate();
+  }
+
+  // lifecycle
+  componentWillMount() {
+    this.loadData();
+  }
+
+  // logic methods
+  loadData() {
+    Promise.all([
+      this.props.loadCasts(),
+      this.props.loadSlides()
+    ]).catch(logError);
+  }
+
+  connectToChromecast(localDebug) {
+    // local debug is needed because there is no clean way to test if i am on a chromecast or not
+    if (localDebug) {
+      this.state.receiverName = 'Schwankcast';
+    }
+    else {
+      const castAway = new window.CastAway();
+      this.receiver = castAway.receive();
+      this.receiver.on('deviceName', (data) => {
         this.setState({
-          slideIndex: index >= this.slides.length ? 0 : index
+          receiverName: data
         });
-      }
+      });
+    }
+  }
 
-      setTimeout(changeSlide, this.delay);
-    };
-    changeSlide();
-
-    // handle updates
+  checkForUpdate() {
     setInterval(() => {
       if (!this.cast || !this.cast._id) {
         return;
@@ -53,15 +73,19 @@ class Play extends SelfBindingComponent {
     }, 5000);
   }
 
-  componentWillMount() {
-    this.loadData();
-  }
+  playSlideShow() {
+    this.delay = 15000;
+    const changeSlide = () => {
+      if (this.slides) {
+        const index = this.state.slideIndex + 1;
+        this.setState({
+          slideIndex: index >= this.slides.length ? 0 : index
+        });
+      }
 
-  loadData() {
-    Promise.all([
-      this.props.loadCasts(),
-      this.props.loadSlides()
-    ]).catch(logError);
+      setTimeout(changeSlide, this.delay);
+    };
+    changeSlide();
   }
 
   findCast() {
@@ -72,11 +96,7 @@ class Play extends SelfBindingComponent {
       };
     };
 
-    if (!this.receiver) {
-      return defaultCast();
-    }
-
-    const cast = _.findWhere(this.props.casts, {name: this.receiver.friendlyName});
+    const cast = _.findWhere(this.props.casts, {name: this.state.receiverName});
     return cast ? cast : defaultCast;
   }
 
@@ -93,6 +113,7 @@ class Play extends SelfBindingComponent {
     return _.sortBy(slides, 'sort');
   }
 
+  // render methods
   renderSlide(slide) {
     if (!slide) {
       return <Empty />;
