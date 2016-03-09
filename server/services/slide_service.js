@@ -3,6 +3,7 @@ var util = require('./util.js');
 
 var db = require('../services/database.js')
 var Slide = db.model('slides', {
+  type: String,
   cast_id: String,
   name: String,
   file: String,

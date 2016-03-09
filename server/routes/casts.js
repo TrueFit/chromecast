@@ -9,6 +9,14 @@ module.exports = (router) => {
     });
 	});
 
+  router.get('/casts/:cast_id', (req, res) => {
+    castService.findOne(req.params.cast_id).then((cast) => {
+  		res.json(cast);
+    }).catch((err) => {
+      next(err);
+    });
+	});
+
   router.post('/casts', (req, res) => {
     castService.update(req.body).then((cast) => {
       res.json(cast);

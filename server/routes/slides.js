@@ -1,4 +1,5 @@
 var slideService = require('../services/slide_service.js');
+var castService = require('../services/cast_service.js');
 var multer = require('multer');
 var upload = multer({dest:'./release/images/'});
 var fs = require('fs');
@@ -22,8 +23,11 @@ module.exports = (router) => {
   router.post('/slides', upload.any(), (req, res, next) => {
     // update logic
     var updateSlide = (slide) => {
-      slideService.update(slide).then((data) => {
-        res.json(data);
+      Promise.all([
+        slideService.update(slide),
+        castService.tickCastUpdate(slide.cast_id)
+      ]).then((data) => {
+        res.json(data[0]);
       }).catch((err) => {
         next(err);
       });
@@ -31,6 +35,7 @@ module.exports = (router) => {
 
     // capture object
     var s = {
+      type: 'Image',
       cast_id: req.body.cast_id,
       name: req.body.name,
       sort: req.body.sort

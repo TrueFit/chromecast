@@ -1,6 +1,19 @@
 var Promise = require('promise');
 
 module.exports = {
+  findOne: (_id, type) => {
+    return new Promise((resolve, reject) => {
+      type.findOne({_id: _id}, (err, obj) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve(obj);
+      });
+    });
+  },
+
   findAll: (type) => {
     return new Promise((resolve, reject) => {
       type.find({}, (err, objs) => {

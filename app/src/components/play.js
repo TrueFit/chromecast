@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import _ from 'underscore';
 
-import { loadCasts, loadSlides } from '../actions';
+import { loadCasts,loadSlides, checkLastCastUpdate } from '../actions';
+import { Empty, Image } from './slides';
 import { SelfBindingComponent, logError } from '../support';
 
 import ReactCSSTransitionReplace from 'react-css-transition-replace';
@@ -12,28 +13,51 @@ class Play extends SelfBindingComponent {
   constructor(props) {
     super(props);
 
-    const castAway = new window.CastAway();
-    this.receiver = castAway.receive();
+    // setup chromecast
+    // const castAway = new window.CastAway();
+    // this.receiver = castAway.receive();
 
-    // this.receiver = {
-    //   friendlyName: "Schwankcast"
-    // };
+    this.receiver = {
+      friendlyName: "Schwankcast"
+    };
 
     this.state = {
       slideIndex: 0
     };
 
+    // handle slide show (we use timeout so the delay can change)
     this.delay = 15000;
+    const changeSlide = () => {
+      if (this.slides) {
+        const index = this.state.slideIndex + 1;
+        this.setState({
+          slideIndex: index >= this.slides.length ? 0 : index
+        });
+      }
 
+      setTimeout(changeSlide, this.delay);
+    };
+    changeSlide();
+
+    // handle updates
     setInterval(() => {
-      const index = this.state.slideIndex + 1;
-      this.setState({
-        slideIndex: index >= this.slides.length ? 0 : index
+      if (!this.cast || !this.cast._id) {
+        return;
+      }
+
+      checkLastCastUpdate(this.cast._id).then(({data}) => {
+        if (data.update > this.cast.update) {
+          this.loadData();
+        }
       });
-    }, this.delay);
+    }, 5000);
   }
 
   componentWillMount() {
+    this.loadData();
+  }
+
+  loadData() {
     Promise.all([
       this.props.loadCasts(),
       this.props.loadSlides()
@@ -42,7 +66,7 @@ class Play extends SelfBindingComponent {
 
   findCast() {
     var defaultCast = () => {
-      return this.cast = {
+      return {
         delay: this.delay,
         default: true
       };
@@ -71,22 +95,16 @@ class Play extends SelfBindingComponent {
 
   renderSlide(slide) {
     if (!slide) {
-      return (
-        <div key="0"></div>
-      );
+      return <Empty />;
     }
 
-    return (
-      <div key={slide._id} style={{backgroundImage: `url(${slide.file})`}} className="full-screen-image">
-      </div>
-    );
+    return <Image slide={slide} />;
   }
 
   render() {
-    const cast = this.findCast();
-
-    this.delay = cast.delay;
-    this.slides = this.filterSlides(cast);
+    this.cast = this.findCast();
+    this.delay = this.cast.delay;
+    this.slides = this.filterSlides(this.cast);
 
     const slide = this.slides.length > 0 ? this.slides[this.state.slideIndex] : null;
 
