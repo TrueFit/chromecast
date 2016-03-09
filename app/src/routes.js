@@ -8,7 +8,7 @@ import Play from './components/play';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={Play} />
+    <IndexRoute component={Config} />
     <Route path="config" component={Config} />
     <Route path="launch" component={Launch} />
     <Route path="play" component={Play} />
