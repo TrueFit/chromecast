@@ -12,12 +12,12 @@ class Play extends SelfBindingComponent {
   constructor(props) {
     super(props);
 
-    // const castAway = new window.CastAway();
-    // this.receiver = castAway.receive();
+    const castAway = new window.CastAway();
+    this.receiver = castAway.receive();
 
-    this.receiver = {
-      friendlyName: "Schwankcast"
-    };
+    // this.receiver = {
+    //   friendlyName: "Schwankcast"
+    // };
 
     this.state = {
       slideIndex: 0
