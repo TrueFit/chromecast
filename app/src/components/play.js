@@ -5,77 +5,95 @@ import _ from 'underscore';
 import { loadCasts, loadSlides } from '../actions';
 import { SelfBindingComponent, logError } from '../support';
 
+import ReactCSSTransitionReplace from 'react-css-transition-replace';
 import CastAway from '../../vendor/castaway/cast-away';
 
 class Play extends SelfBindingComponent {
   constructor(props) {
     super(props);
 
-    this.state = { src: null };
+    // const castAway = new window.CastAway();
+    // this.receiver = castAway.receive();
 
-    const castAway = new window.CastAway();
-    this.receiver = castAway.receive();
+    this.receiver = {
+      friendlyName: "Schwankcast"
+    };
 
-    // this.receiver = {
-    //   friendlyName: "Schwankcast"
-    // };
+    this.state = {
+      slideIndex: 0
+    };
+
+    this.delay = 15000;
+
+    setInterval(() => {
+      const index = this.state.slideIndex + 1;
+      this.setState({
+        slideIndex: index >= this.slides.length ? 0 : index
+      });
+    }, this.delay);
   }
 
   componentWillMount() {
     Promise.all([
       this.props.loadCasts(),
       this.props.loadSlides()
-    ]).then(this.applySlides).catch(logError);
+    ]).catch(logError);
   }
 
-  applySlides() {
-    let delay = 15000;
+  findCast() {
+    var defaultCast = () => {
+      return this.cast = {
+        delay: this.delay,
+        default: true
+      };
+    };
 
-    // if we have a receiver then restrict to that name
-    let slides = null;
-    if (this.receiver) {
-      const cast = _.findWhere(this.props.casts, {name: this.receiver.friendlyName});
-      if (cast) {
-        slides = _.where(this.props.slides, { cast_id: cast._id });
-        delay = cast.delay;
-      }
+    if (!this.receiver) {
+      return defaultCast();
     }
 
-    if (!slides) {
+    const cast = _.findWhere(this.props.casts, {name: this.receiver.friendlyName});
+    return cast ? cast : defaultCast;
+  }
+
+  filterSlides(cast) {
+    var slides;
+    if (cast.default) {
       slides = this.props.slides;
     }
+    else {
+      slides = _.where(this.props.slides, { cast_id: cast._id });
+    }
 
-    slides = _.sortBy(slides, 'sort');
+    // sort
+    return _.sortBy(slides, 'sort');
+  }
 
-    // update logic
-    const updateSlide = (index) => {
-      if (slides.length == 0) {
-        return;
-      }
+  renderSlide(slide) {
+    if (!slide) {
+      return (
+        <div key="0"></div>
+      );
+    }
 
-      this.setState({
-        src: slides[index].file
-      });
-    };
-    updateSlide(0);
-
-    let i = 0;
-    setInterval(() => {
-      // define index
-      i++;
-      if (i >= slides.length) {
-        i=0;
-      }
-
-      // update slide
-      updateSlide(i);
-    }, delay);
+    return (
+      <div key={slide._id} style={{backgroundImage: `url(${slide.file})`}} className="full-screen-image">
+      </div>
+    );
   }
 
   render() {
+    const cast = this.findCast();
+
+    this.delay = cast.delay;
+    this.slides = this.filterSlides(cast);
+
+    const slide = this.slides.length > 0 ? this.slides[this.state.slideIndex] : null;
+
     return (
-      <div style={{backgroundImage: `url(${this.state.src})`}} className="full-screen-image">
-      </div>
+      <ReactCSSTransitionReplace transitionName="cross-fade" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
+        {this.renderSlide(slide)}
+      </ReactCSSTransitionReplace>
     );
   }
 }
