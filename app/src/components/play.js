@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 
 import { loadCasts, loadSlides } from '../actions';
-import { SelfBindingComponent, logError, ROOT_URL } from '../support';
+import { SelfBindingComponent, logError } from '../support';
 
 import CastAway from '../../vendor/castaway/cast-away';
 
@@ -54,7 +54,7 @@ class Play extends SelfBindingComponent {
       }
 
       this.setState({
-        src: `${ROOT_URL}/images/${slides[index].file}`
+        src: slides[index].file
       });
     };
     updateSlide(0);

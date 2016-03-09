@@ -36,7 +36,7 @@ class CastSlideList extends SelfBindingComponent {
             {slide.sort}
           </td>
           <td>
-            <img className="image-preview" src={`${ROOT_URL}/images/${slide.file}`} />
+            <img className="image-preview" src={slide.file} />
           </td>
           <td>
             <Button onClick={() => this.edit(slide)}>Edit</Button>

@@ -1,6 +1,14 @@
 var slideService = require('../services/slide_service.js');
 var multer = require('multer');
 var upload = multer({dest:'./release/images/'});
+var fs = require('fs');
+var cloudinary = require('cloudinary');
+
+cloudinary.config({
+ cloud_name: 'hfzhbyr9l',
+ api_key: '162493363329393',
+ api_secret: 'uRhsAPnUQxNrEby9J-eRQLyeALs'
+});
 
 module.exports = (router) => {
   router.get('/slides', (req, res) => {
@@ -11,7 +19,17 @@ module.exports = (router) => {
     });
   });
 
-  router.post('/slides', upload.any(), (req, res) => {
+  router.post('/slides', upload.any(), (req, res, next) => {
+    // update logic
+    var updateSlide = (slide) => {
+      slideService.update(slide).then((data) => {
+        res.json(data);
+      }).catch((err) => {
+        next(err);
+      });
+    };
+
+    // capture object
     var s = {
       cast_id: req.body.cast_id,
       name: req.body.name,
@@ -25,14 +43,27 @@ module.exports = (router) => {
 
     // won't be here potentially on update
     if (req.files.length > 0) {
-      s.file = req.files[0].filename
-    }
+      var opts = null;
+      if (req.body.public_id) {
+        opts = {
+          public_id: req.body.public_id
+        };
+      }
 
-    slideService.update(s).then((slide) => {
-      res.json(slide);
-    }).catch((err) => {
-      next(err);
-    });
+      var file = req.files[0];
+      cloudinary.uploader.upload(file.path, (result) => {
+        if (fs.exists(file.path)) {
+          fs.unlink(file.path);
+        }
+
+        s.file = result.secure_url;
+        s.public_id = result.public_id;
+        updateSlide(s);
+      }, opts);
+    }
+    else {
+      updateSlide(s);
+    }
   });
 
   router.delete('/slides/:slide_id', (req, res) => {

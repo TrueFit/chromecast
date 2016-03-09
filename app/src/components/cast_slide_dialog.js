@@ -43,8 +43,10 @@ class CastSlideDialog extends SelfBindingComponent {
   }
 
   editSlide(slide) {
-    this.props.fields.cast_id.onChange(slide.cast_id);
     this.props.fields._id.onChange(slide._id);
+    this.props.fields.cast_id.onChange(slide.cast_id);
+    this.props.fields.public_id.onChange(slide.public_id);
+
     this.props.fields.name.onChange(slide.name);
     this.props.fields.sort.onChange(slide.sort);
 
@@ -101,5 +103,5 @@ class CastSlideDialog extends SelfBindingComponent {
 
 export default reduxForm({
   form: 'slide',
-  fields: ['_id', 'cast_id', 'name', 'sort', 'file']
+  fields: ['_id', 'cast_id', 'name', 'sort', 'file', 'public_id']
 }, null, { loadSlides, updateSlide })(CastSlideDialog);
