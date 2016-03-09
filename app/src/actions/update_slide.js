@@ -1,7 +1,7 @@
 export const UPDATE_SLIDE_SUCCESS = "UPDATE_SLIDE_SUCCESS";
 export const UPDATE_SLIDE_FAILURE = "UPDATE_SLIDE_FAILURE";
 
-import { POST_FILE, apiExecutor } from '../sugar';
+import { POST_FILE, apiExecutor } from '../support';
 
 export const updateSlide = (slide) => {
   // build form data so we can post like a form

@@ -12,10 +12,6 @@ import routes from './routes';
 // styles
 import './styles/styles.scss';
 
-// inject click
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
-
 // create the store
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducers);

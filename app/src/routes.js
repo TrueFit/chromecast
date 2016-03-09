@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import App from './containers/app';
-import Config from './containers/config';
-import Launch from './containers/launch';
-import Play from './containers/play';
+import App from './components/app';
+import Config from './components/config';
+import Launch from './components/launch';
+import Play from './components/play';
 
 export default (
   <Route path="/" component={App}>

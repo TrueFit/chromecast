@@ -19,15 +19,15 @@
   "license": "MIT",
   "dependencies": {
     "axios": "0.9.1",
-    "material-ui": "0.14.4",
     "object-assign": "4.0.1",
     "react": "0.14.7",
+    "react-bootstrap": "0.28.3",
     "react-dom": "0.14.7",
     "react-dropzone": "3.3.2",
     "react-promise": "1.1.1",
     "react-redux": "4.4.0",
     "react-router": "2.0.0",
-    "react-tap-event-plugin": "0.2.2",
+    "react-router-bootstrap": "0.20.1",
     "redux": "3.3.1",
     "redux-form": "4.2.0",
     "redux-thunk": "1.0.3"

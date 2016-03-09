@@ -1,7 +1,7 @@
 export const DELETE_CASTS_SUCCESSFUL = "DELETE_CASTS_SUCCESSFUL";
 export const DELETE_CASTS_FAILURE = "DELETE_CASTS_FAILURE";
 
-import { DELETE, apiExecutor } from '../sugar';
+import { DELETE, apiExecutor } from '../support';
 
 export const deleteCast = (castId) => {
   return apiExecutor({

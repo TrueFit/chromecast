@@ -1,4 +1,11 @@
-@import url("https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css");
+th, td {
+  padding: 5px 0px !important;
+  border-top: 0;
+
+  button {
+    float: right;
+  }
+}
 
 .full-screen-image {
   position: absolute;
@@ -18,10 +25,6 @@
   background-size: cover;
 }
 
-.spacer {
-  margin: 5px;
-}
-
 .small-column {
   width: 40px;
 }
@@ -38,25 +41,6 @@
   color: rgba(0,0,0,0.3);
 
   cursor: pointer;
-}
-
-.cast-row {
-  background-color: rgb(48, 48, 48);
-  color: #fff;
-
-  td {
-    padding: 5px;
-  }
-}
-
-.slide-table {
-  margin-bottom: 0 !important;
-}
-
-.slide-row {
-  td {
-    padding: 5px;
-  }
 }
 
 .image-preview {

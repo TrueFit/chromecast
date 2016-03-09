@@ -1,61 +1,31 @@
 import React, { Component } from 'react';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-import AppBar from 'material-ui/lib/app-bar';
-import LeftNav from 'material-ui/lib/left-nav';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-
-import { Link } from 'react-router';
-
-import { SelfBindingComponent } from '../sugar';
+import { SelfBindingComponent } from '../support';
 
 
-export class Menu extends SelfBindingComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {open: false};
-  }
-
-  toggle() {
-    this.update(!this.state.open);
-  }
-
-  open() {
-    this.update(true);
-  }
-
-  close() {
-    this.update(false);
-  }
-
-  update(open) {
-    this.setState({open});
-  }
-
+export default class extends SelfBindingComponent {
   render() {
     return (
-      <div>
-        <AppBar
-          title={this.props.name}
-          onLeftIconButtonTouchTap={this.toggle}
-        />
-        <LeftNav
-          docked={false}
-          width={200}
-          open={this.state.open}
-          onRequestChange={o=>this.update(o)}
-        >
-          <MenuItem>
-            <Link to="config">Configure</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to="launch">Launch</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to="play">Play</Link>
-          </MenuItem>
-        </LeftNav>
-      </div>
+      <Navbar>
+        <Navbar.Header>
+          <a href="/">
+            <Navbar.Brand>Chromecast</Navbar.Brand>
+          </a>
+        </Navbar.Header>
+        <Nav>
+          <LinkContainer to="config">
+            <NavItem>Configure</NavItem>
+          </LinkContainer>
+          <LinkContainer to="launch">
+            <NavItem>Launch</NavItem>
+          </LinkContainer>
+          <LinkContainer to="play">
+            <NavItem>Play</NavItem>
+          </LinkContainer>
+        </Nav>
+      </Navbar>
     );
   }
 }

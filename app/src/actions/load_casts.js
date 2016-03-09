@@ -1,7 +1,7 @@
 export const LOAD_CASTS_SUCCESSFUL = "LOAD_CASTS_SUCCESSFUL";
 export const LOAD_CASTS_FAILURE = "LOAD_CASTS_FAILURE";
 
-import { GET, apiExecutor } from '../sugar';
+import { GET, apiExecutor } from '../support';
 
 export const loadCasts = () => {
   return apiExecutor({

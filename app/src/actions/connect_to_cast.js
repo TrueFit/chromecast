@@ -1,5 +1,5 @@
 import CastAway from '../../vendor/castaway/cast-away';
-import { APP_ID } from '../suppport';
+import { APP_ID } from '../support';
 
 export const CONNECT_SUCCESS = "CONNECT_SUCCESS";
 export const CONNECT_FAILURE = "CONNECT_FAILURE";

@@ -1,7 +1,7 @@
 export const UPDATE_CAST_SUCCESSFUL = "UPDATE_CAST_SUCCESSFUL";
 export const UPDATE_CAST_FAILURE = "UPDATE_CAST_FAILURE";
 
-import { POST, apiExecutor } from '../sugar';
+import { POST, apiExecutor } from '../support';
 
 export const updateCast = (cast) => {
   return apiExecutor({

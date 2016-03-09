@@ -1,7 +1,7 @@
 export const DELETE_SLIDE_SUCCESSFUL = "DELETE_SLIDE_SUCCESSFUL";
 export const DELETE_SLIDE_FAILURE = "DELETE_SLIDE_FAILURE";
 
-import { DELETE, apiExecutor } from '../sugar';
+import { DELETE, apiExecutor } from '../support';
 
 export const deleteSlide = (slideId) => {
   return apiExecutor({
