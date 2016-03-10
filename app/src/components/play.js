@@ -52,7 +52,9 @@ class Play extends SelfBindingComponent {
       const castAway = new window.CastAway();
       const receiver = castAway.receive();
 
+      console.log('hi');
       loadEmptyMessages().then(({data}) => {
+        console.log(data);
         if (data.length == 0) {
           return;
         }
@@ -62,8 +64,8 @@ class Play extends SelfBindingComponent {
           receiverName: message.message
         });
 
-        deleteMessage(message._id);
-      });
+        deleteMessage(message._id).catch(logError);
+      }).catch(logError);
     }
   }
 
