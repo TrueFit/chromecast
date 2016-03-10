@@ -51,7 +51,10 @@ class Play extends SelfBindingComponent {
     else {
       const castAway = new window.CastAway();
       this.receiver = castAway.receive();
+      console.log(this.receiver);
+
       this.receiver.on('deviceName', (data) => {
+        console.log(data);
         this.setState({
           receiverName: data
         });
