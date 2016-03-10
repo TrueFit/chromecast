@@ -4,7 +4,7 @@ import _ from 'underscore';
 
 import { loadCasts,loadSlides, checkLastCastUpdate } from '../actions';
 import { Empty, Image } from './slides';
-import { SelfBindingComponent, DEBUG, logError } from '../support';
+import { SelfBindingComponent, DEBUG, CHROMECAST_APP_ID, logError } from '../support';
 
 import ReactCSSTransitionReplace from 'react-css-transition-replace';
 import CastAway from '../../vendor/castaway/cast-away';
@@ -49,15 +49,12 @@ class Play extends SelfBindingComponent {
       this.state.receiverName = 'Schwankcast';
     }
     else {
-      const castAway = new window.CastAway();
+      const castAway = new window.CastAway({applicationId:CHROMECAST_APP_ID});
       const receiver = castAway.receive();
 
-      console.log('castAway', castAway);
-      console.log('receiver', receiver);
-
-      receiver.onMessage = (e) => {
-        console.log('message', e);
-      };
+      receiver.on('setDeviceName', (data) => {
+        console.log('message', data);
+      });
     }
   }
 

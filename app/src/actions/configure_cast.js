@@ -6,7 +6,7 @@ export const configureCast = (session) => {
     return new Promise((resolve, reject) => {
       const deviceName = session.session.receiver.friendlyName;
 
-      session.send('deviceName', { deviceName }, (err, data) => {
+      session.send('setDeviceName', { data: deviceName }, (err, data) => {
         if (err) {
           dispatch({
             type: CAST_CONFIGURE_FAIL,
@@ -20,7 +20,6 @@ export const configureCast = (session) => {
           payload: deviceName
         });
         resolve();
-
       });
     });
   };

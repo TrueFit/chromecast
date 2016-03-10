@@ -1,5 +1,5 @@
 import CastAway from '../../vendor/castaway/cast-away';
-import { APP_ID } from '../support';
+import { CHROMECAST_APP_ID } from '../support';
 
 export const CONNECT_SUCCESS = "CONNECT_SUCCESS";
 export const CONNECT_FAILURE = "CONNECT_FAILURE";
@@ -22,7 +22,7 @@ export const connectToCast = () => {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
       const castAway = new window.CastAway({
-        applicationID: APP_ID
+        applicationID: CHROMECAST_APP_ID
       });
 
       castAway.on('receivers:available', () => {
