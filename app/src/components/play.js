@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import _ from 'underscore';
 
-import { loadCasts,loadSlides, checkLastCastUpdate } from '../actions';
+import { loadCasts,loadSlides, checkLastCastUpdate, loadEmptyMessages, deleteMessage } from '../actions';
 import { Empty, Image } from './slides';
 import { SelfBindingComponent, DEBUG, CHROMECAST_APP_ID, logError } from '../support';
 
@@ -49,11 +49,20 @@ class Play extends SelfBindingComponent {
       this.state.receiverName = 'Schwankcast';
     }
     else {
-      const castAway = new window.CastAway({applicationId:CHROMECAST_APP_ID});
+      const castAway = new window.CastAway();
       const receiver = castAway.receive();
 
-      receiver.on('setDeviceName', (data) => {
-        console.log('message', data);
+      loadEmptyMessages().then(({data}) => {
+        if (data.length == 0) {
+          return;
+        }
+
+        const message = data[0];
+        this.setState({
+          receiverName: message.message
+        });
+
+        deleteMessage(message._id);
       });
     }
   }

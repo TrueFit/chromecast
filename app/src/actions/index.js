@@ -8,3 +8,5 @@ export * from './check_last_cast_update';
 export * from './load_slides';
 export * from './update_slide';
 export * from './delete_slide';
+
+export * from './messages';
