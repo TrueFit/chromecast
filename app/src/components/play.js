@@ -28,6 +28,7 @@ class Play extends SelfBindingComponent {
     this.connectToChromecast(DEBUG);
     this.playSlideShow();
     this.checkForUpdate();
+    this.whoAmI();
   }
 
   // lifecycle
@@ -51,22 +52,23 @@ class Play extends SelfBindingComponent {
     else {
       const castAway = new window.CastAway();
       const receiver = castAway.receive();
-
-      console.log('hi');
-      loadEmptyMessages().then(({data}) => {
-        console.log(data);
-        if (data.length == 0) {
-          return;
-        }
-
-        const message = data[0];
-        this.setState({
-          receiverName: message.message
-        });
-
-        deleteMessage(message._id).catch(logError);
-      }).catch(logError);
     }
+  }
+
+  whoAmI() {
+    loadEmptyMessages().then(({data}) => {
+      if (data.length == 0) {
+        setTimeout(this.whoAmI, 500);
+        return;
+      }
+
+      const message = data[0];
+      this.setState({
+        receiverName: message.message
+      });
+
+      deleteMessage(message._id).catch(logError);
+    }).catch(logError);
   }
 
   checkForUpdate() {
