@@ -11,6 +11,6 @@ export default (
     <IndexRoute component={Config} />
     <Route path="config" component={Config} />
     <Route path="launch" component={Launch} />
-    <Route path="play" component={Play} />
+    <Route path="play/:cast" component={Play} />
   </Route>
 );

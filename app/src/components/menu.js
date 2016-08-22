@@ -21,7 +21,7 @@ export default class extends SelfBindingComponent {
           <LinkContainer to="launch">
             <NavItem>Launch</NavItem>
           </LinkContainer>
-          <LinkContainer to="play">
+          <LinkContainer to="play/Atrium">
             <NavItem>Play</NavItem>
           </LinkContainer>
         </Nav>
