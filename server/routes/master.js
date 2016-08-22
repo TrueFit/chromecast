@@ -57,9 +57,10 @@ module.exports = (router) => {
           return;
         }
 
-        console.log(castName + ' should be ready');
+        var url = 'https://truefit-chromecast.herokuapp.com/play/' + castName;
+        console.log(castName + ' should be ready at ' + url);
 
-        manager.load('https://www.npmjs.com/package/castv2-web');
+        manager.load(url);
 
         res.json({
           result: 'Ready'

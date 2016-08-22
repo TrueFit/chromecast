@@ -18,7 +18,7 @@ var getPlugins = function(env) {
   switch(env) {
     case 'production':
       plugins.push(new webpack.optimize.DedupePlugin());
-      plugins.push(new webpack.optimize.UglifyJsPlugin({minimize: true, sourceMap: true}));
+      plugins.push(new webpack.optimize.UglifyJsPlugin({minimize: false, sourceMap: true}));
       break;
     case 'development':
       plugins.push(new webpack.HotModuleReplacementPlugin());

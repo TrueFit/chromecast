@@ -34,7 +34,12 @@ try {
 
   // map to the angular app
   app.use(express.static(__dirname + '/release'));
-  app.get('*', function(req, res) {
+  app.get('*', function(req, res, next) {
+    if (req.url.endsWith('.js') || req.url.endsWith('.css')) {
+      next();
+      return;
+    }
+
   	res.status(200).sendFile(path.join(__dirname + '/release/index.html'));
   });
 

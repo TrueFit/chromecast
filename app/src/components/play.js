@@ -112,11 +112,7 @@ class Play extends SelfBindingComponent {
 
     const slide = this.slides.length > 0 ? this.slides[this.state.slideIndex] : null;
 
-    return (
-      <ReactCSSTransitionReplace transitionName="cross-fade" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
-        {this.renderSlide(slide)}
-      </ReactCSSTransitionReplace>
-    );
+    return this.renderSlide(slide);
   }
 }
 
