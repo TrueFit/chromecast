@@ -6,36 +6,40 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var path = require('path');
 
-// allow cors
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  next();
-});
+try {
+  // allow cors
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+    next();
+  });
 
-// configure to use middleware for json
-app.use(bodyParser.json({ type: 'application/json' }));
+  // configure to use middleware for json
+  app.use(bodyParser.json({ type: 'application/json' }));
 
-// load routes
-var glob = require('glob');
-glob('./server/routes/*.js', function(er, files) {
-  if (er) {
-    console.log(er);
-    return;
-  }
+  // load routes
+  var glob = require('glob');
+  glob('./server/routes/*.js', function(er, files) {
+    if (er) {
+      console.log(er);
+      return;
+    }
 
-  for (var i = 0; i < files.length; i++) {
-    require(files[i])(router);
-  }
-});
-app.use('/api', router);
+    for (var i = 0; i < files.length; i++) {
+      require(files[i])(router);
+    }
+  });
+  app.use('/api', router);
 
-// map to the angular app
-app.use(express.static(__dirname + '/release'));
-app.get('*', function(req, res) {
-	res.status(200).sendFile(path.join(__dirname + '/release/index.html'));
-});
+  // map to the angular app
+  app.use(express.static(__dirname + '/release'));
+  app.get('*', function(req, res) {
+  	res.status(200).sendFile(path.join(__dirname + '/release/index.html'));
+  });
 
-// launch server
-app.listen(process.env.PORT || 3005);
+  // launch server
+  app.listen(process.env.PORT || 3006);
+} catch(err) {
+  console.log(err);
+}

@@ -4,10 +4,10 @@ import _ from 'underscore';
 
 import { loadCasts,loadSlides, checkLastCastUpdate, loadEmptyMessages, deleteMessage } from '../actions';
 import { Empty, Image } from './slides';
-import { SelfBindingComponent, DEBUG, CHROMECAST_APP_ID, logError } from '../support';
+import { SelfBindingComponent, logError } from '../support';
 
 import ReactCSSTransitionReplace from 'react-css-transition-replace';
-import CastAway from '../../vendor/castaway/cast-away';
+
 
 // Note from josh:
 //  I do a bit here outside of state. this is because a state update fires the render method
@@ -20,15 +20,13 @@ class Play extends SelfBindingComponent {
 
     // state
     this.state = {
-      receiverName: '',
+      receiverName: props.params.cast,
       slideIndex: 0
     };
 
     // start up
-    this.connectToChromecast(DEBUG);
     this.playSlideShow();
     this.checkForUpdate();
-    this.whoAmI();
   }
 
   // lifecycle
@@ -42,33 +40,6 @@ class Play extends SelfBindingComponent {
       this.props.loadCasts(),
       this.props.loadSlides()
     ]).catch(logError);
-  }
-
-  connectToChromecast(localDebug) {
-    // local debug is needed because there is no clean way to test if i am on a chromecast or not
-    if (localDebug) {
-      this.state.receiverName = 'Schwankcast';
-    }
-    else {
-      const castAway = new window.CastAway();
-      const receiver = castAway.receive();
-    }
-  }
-
-  whoAmI() {
-    loadEmptyMessages().then(({data}) => {
-      if (data.length == 0) {
-        setTimeout(this.whoAmI, 500);
-        return;
-      }
-
-      const message = data[0];
-      this.setState({
-        receiverName: message.message
-      });
-
-      deleteMessage(message._id).catch(logError);
-    }).catch(logError);
   }
 
   checkForUpdate() {
