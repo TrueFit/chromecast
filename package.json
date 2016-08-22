@@ -11,6 +11,9 @@
     "type": "git",
     "url": "git+https://bitbucket.org/truefit/chromecast.git"
   },
+  "engines": {
+    "node": "4.4.7"
+  },
   "author": "jgretz",
   "license": "MIT",
   "homepage": "https://bitbucket.org/truefit/chromecast#readme",
