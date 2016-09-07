@@ -12,4 +12,10 @@ zenExpress({
     type: 'mongo',
     connection: 'mongodb://truefit:rWQx8ND0CA1tZ0C2Nl0Zt@ds019956.mlab.com:19956/chromecast-v2'
   },
+
+  uploads: {
+    type: 'file',
+    route: '/files',
+    path: `${__dirname}/../lib/files`
+  },
 });

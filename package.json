@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/TrueFit/chromecast#readme",
   "dependencies": {
-    "zen-express": "0.0.16"
+    "zen-express": "0.0.17"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
