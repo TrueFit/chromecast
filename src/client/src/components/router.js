@@ -9,6 +9,7 @@ export default () =>
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Play} />
+      <Route path="play/:castName" component={Play} />
     </Route>
   </Router>
 );
