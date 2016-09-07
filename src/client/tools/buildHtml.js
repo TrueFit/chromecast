@@ -18,7 +18,7 @@ fs.readFile('src/index.html', 'utf8', (err, markup) => {
   }
 
   // make sure the build dir exists
-  const dir = 'lib/';
+  const dir = `${__dirname}/../../../lib/client/`;
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }

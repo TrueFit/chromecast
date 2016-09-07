@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "debug": "nodemon src/index.js --exec babel-node",
-    "start": "babel-node src/index.js"
+    "start": "babel-node src/index.js",
+    "compile": "node tools/build.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
   },
   "homepage": "https://github.com/TrueFit/chromecast#readme",
   "dependencies": {
-    "zen-express": "0.0.17"
+    "zen-express": "0.0.17",
+    "shelljs": "^0.7.4"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
