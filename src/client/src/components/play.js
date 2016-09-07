@@ -17,10 +17,48 @@ class Play extends Component {
   }
 
   componentWillMount() {
-    this.props.loadChromecasts();
-    this.props.loadSlides();
+    this.load().then(() => {
+      setTimeout(this.step, 0);
+      setInterval(this.load, 60 * 1000);
+    });
   }
 
+  // load
+  load() {
+    return Promise.all([
+      this.props.loadChromecasts(),
+      this.props.loadSlides(),
+    ]);
+  }
+
+  // filters
+  buildData() {
+    const { params: { castName }, chromecasts, slides } = this.props;
+    const cast = _.find(chromecasts, c => c.name === castName);
+    const slideList = cast ? cast.slides.map(sId => _.find(slides, s => s._id === sId)) : null;
+
+    return {
+      name: castName,
+      cast,
+      slides: slideList,
+    };
+  }
+
+  // timer
+  step() {
+    const { cast, slides } = this.buildData();
+
+    let next = this.state.index += 1;
+    if (this.state.index >= slides.length) {
+      next = 0;
+    }
+
+    this.setState({ index: next });
+
+    setTimeout(this.step, cast['transition time'] * 1000);
+  }
+
+  // render
   renderInstructions(instructions) {
     return (
       <div>
@@ -29,30 +67,36 @@ class Play extends Component {
     );
   }
 
-  renderSlide(slide) {
+  renderSlide(slide, index) {
     if (!slide) {
       return null;
     }
 
-    return <img key={slide._id} src={apiUrl(slide.image)} alt={slide.name} />;
+    const className = index === this.state.index ? 'shown' : 'hidden';
+    return (
+      <img
+        key={slide._id}
+        src={apiUrl(slide.image)}
+        alt={slide.name}
+        className={className}
+      />
+    );
   }
 
   render() {
-    const { params: { castName }, chromecasts, slides } = this.props;
+    const data = this.buildData();
 
-    if (!castName) {
+    if (!data.name) {
       return this.renderInstructions('Please go to /play/castname to start the show.');
     }
 
-    const cast = _.find(chromecasts, c => c.name === castName);
-    if (!cast) {
-      return this.renderInstructions(`Cast with name ${castName} not found.`);
+    if (!data.cast) {
+      return this.renderInstructions(`Cast with name ${data.name} not found.`);
     }
 
-    const slideList = cast.slides.map(sId => _.find(slides, s => s._id === sId));
     return (
       <div className="play">
-        {slideList.map(s => this.renderSlide(s))}
+        {data.slides.map((s, index) => this.renderSlide(s, index))}
       </div>
     );
   }
