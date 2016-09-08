@@ -1,6 +1,7 @@
 import zenExpress from 'zen-express';
 
 zenExpress({
+  src: __dirname,
   port: process.env.PORT || 4200,
 
   spa: {
