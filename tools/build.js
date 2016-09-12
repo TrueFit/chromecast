@@ -10,6 +10,9 @@ rm('-rf', 'lib/src/');
 
 exec('babel -d lib/routes src/routes');
 
+// copy package.json
+cp('package.json', 'lib/package.json');
+
 // move over the player
 cd('./src/client');
 exec('npm run build');
