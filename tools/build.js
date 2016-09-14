@@ -9,6 +9,7 @@ mv('lib/src/index.js', 'lib/index.js');
 rm('-rf', 'lib/src/');
 
 exec('babel -d lib/routes src/routes');
+exec('babel -d lib/services src/services');
 
 // copy package.json
 cp('package.json', 'lib/package.json');
