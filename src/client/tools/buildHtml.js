@@ -27,7 +27,7 @@ fs.readFile('src/index.html', 'utf8', (err, markup) => {
 
   // since a separate spreadsheet is only utilized
   // for the production build, need to dynamically add this here.
-  $('head').prepend('<link rel="stylesheet" href="/admin/styles.css">');
+  $('head').prepend('<link rel="stylesheet" href="/styles.css">');
 
   // write
   fs.writeFile(`${dir}/index.html`, $.html(), 'utf8', function (err) {
