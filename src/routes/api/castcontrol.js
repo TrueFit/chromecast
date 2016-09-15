@@ -7,9 +7,9 @@ const resultError = (res, error) => {
   res.status(500).send({ error });
 };
 
-export default class CastList {
+export default class CastControl {
   get(req, res) {
-    const name = req.query.cast;
+    const name = req.params.id;
     if (!name) {
       resultError(res, 'No cast specified');
       return;
@@ -27,6 +27,8 @@ export default class CastList {
       }).catch((err) => {
         resultError(res, err.message);
       });
+    }).catch((e) =>{
+      resultError(res, e.message);
     });
   }
 }

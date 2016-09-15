@@ -16,6 +16,6 @@ zenExpress({
   uploads: {
     type: 'file',
     route: '/files',
-    path: `${__dirname}/../lib/files`
+    path: `${__dirname}/files`
   },
 });
