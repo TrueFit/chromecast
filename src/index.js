@@ -6,7 +6,6 @@ zenExpress({
 
   spa: {
     path: `${__dirname}/client`,
-    index: 'index.html'
   },
 
   db: {

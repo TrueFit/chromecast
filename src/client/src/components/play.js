@@ -35,7 +35,8 @@ class Play extends Component {
   buildData() {
     const { params: { castName }, chromecasts, slides } = this.props;
     const cast = _.find(chromecasts, c => c.name === castName);
-    const slideList = cast ? cast.slides.map(sId => _.find(slides, s => s._id === sId)) : null;
+    const slideList = (cast && cast.slides) ?
+      cast.slides.map(sId => _.find(slides, s => s._id === sId)) : [];
 
     return {
       name: castName,

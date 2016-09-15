@@ -22,7 +22,7 @@ export default class CastList {
         return;
       }
 
-      launchChromecast('http://192.168.1.151:3000', cast).then(() => {
+      launchChromecast('http://chromecast.truefitqa.com:4200', cast).then(() => {
         res.json({ msg: 'Complete' });
       }).catch((err) => {
         resultError(res, err.message);
