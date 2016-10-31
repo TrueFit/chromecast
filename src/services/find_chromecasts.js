@@ -12,8 +12,9 @@ export default (timeout) => {
       var mdns = require('mdns');
       var browser = mdns.createBrowser(mdns.tcp('googlecast'));
       browser.on('serviceUp', (service) => {
+        console.log(service);
         casts.push({
-          name: service.name,
+          name: service.txtRecord.fn,
           address: service.addresses[0],
           port: service.port
         });
