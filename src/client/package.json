@@ -22,7 +22,7 @@
   "license": "MIT",
   "homepage": "https://github.com/TrueFit/chromecast#readme",
   "dependencies": {
-    "axios": "0.14.0",
+    "axios": "0.19.2",
     "class-autobind": "0.1.4",
     "humanize-plus": "1.8.2",
     "lodash": "4.15.0",
